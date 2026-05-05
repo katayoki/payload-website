@@ -16,6 +16,9 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { redirectsPlugin } from '@payloadcms/plugin-redirects'
+import { searchPlugin } from '@payloadcms/plugin-search'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -68,6 +71,15 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
+    redirectsPlugin({
+      collections: ['pages', 'posts'],
+    }),
+    searchPlugin({
+      collections: ['pages', 'posts'],
+    }),
+    seoPlugin({
+      collections: ['pages', 'posts'],
+    }),
     vercelBlobStorage({
       enabled: true,
       collections: {
